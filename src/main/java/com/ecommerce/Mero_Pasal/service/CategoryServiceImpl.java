@@ -2,10 +2,13 @@ package com.ecommerce.Mero_Pasal.service;
 
 
 import com.ecommerce.Mero_Pasal.model.Category;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService{
@@ -26,7 +29,17 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public String deleteCategory (Long Id) {
-        categories.remove (Id);
-        return "Data has been deleted";
+        Category category = categories.stream ()
+                .filter (n->n.getCategoryId ().equals (Id))
+                .findFirst ()
+                .orElseThrow (()-> new ResponseStatusException (HttpStatus.NOT_FOUND, "Id does not match"));
+        categories.remove (category);
+        return "Id has been found and deleted";
+    }
+
+    @Override
+    public String updateCategory (Category category ) {
+    
+
     }
 }
