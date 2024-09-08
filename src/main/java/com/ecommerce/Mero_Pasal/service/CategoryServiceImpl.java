@@ -39,7 +39,22 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public String updateCategory (Category category ) {
-    
+        Optional<Category> updateCategory = categories.stream ()
+                .filter (n->n.getCategoryId ().equals (category.getCategoryId ()))
+                .findFirst ();
+
+        if (updateCategory.isPresent ()) {
+            Category existingCategory = updateCategory.get ();
+            if (existingCategory.getCategoryName () != null) {
+                existingCategory.setCategoryName (category.getCategoryName ());
+                categories.add (existingCategory);
+            }
+        } else {
+            throw new ResponseStatusException (HttpStatus.NOT_FOUND, "Id not found");
+        }
+
+        return "Category has been updated";
+
 
     }
 }
