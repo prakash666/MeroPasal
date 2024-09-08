@@ -1,9 +1,14 @@
 package com.ecommerce.Mero_Pasal.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+import java.util.UUID;
+
+@Entity
 public class Category {
-
-
-    private Long categoryId;
+    @Id
+    private Long categoryId /* = Long.valueOf ( UUID.randomUUID ().toString ())*/;
     private String categoryName;
 
     public Long getCategoryId () {
@@ -26,5 +31,8 @@ public class Category {
     public Category (Long categoryId, String categoryName) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
+    }
+    public Category () {
+
     }
 }
